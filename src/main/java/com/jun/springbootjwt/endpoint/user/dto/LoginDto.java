@@ -1,4 +1,4 @@
-package com.jun.springbootjwt.endpoint.dto;
+package com.jun.springbootjwt.endpoint.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

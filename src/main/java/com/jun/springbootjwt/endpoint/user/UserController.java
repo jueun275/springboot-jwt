@@ -1,8 +1,8 @@
-package com.jun.springbootjwt.endpoint;
+package com.jun.springbootjwt.endpoint.user;
 
-import com.jun.springbootjwt.endpoint.dto.SignUpDto;
-import com.jun.springbootjwt.endpoint.dto.UserDto;
-import com.jun.springbootjwt.endpoint.service.UserService;
+import com.jun.springbootjwt.endpoint.user.dto.SignUpDto;
+import com.jun.springbootjwt.endpoint.user.dto.UserDto;
+import com.jun.springbootjwt.endpoint.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
