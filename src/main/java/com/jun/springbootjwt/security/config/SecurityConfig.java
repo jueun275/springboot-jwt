@@ -42,7 +42,7 @@ public class SecurityConfig  {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+        AuthenticationManager authenticationManager = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
         http
                 .csrf().disable()
                 .httpBasic().disable() /*JWT 이외의  session, http basic, loginform 등의 인증방식을 제거 */
