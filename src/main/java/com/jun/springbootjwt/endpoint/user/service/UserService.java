@@ -1,5 +1,6 @@
 package com.jun.springbootjwt.endpoint.user.service;
 
+import com.jun.springbootjwt.domain.Role;
 import com.jun.springbootjwt.domain.User;
 import com.jun.springbootjwt.domain.UserRepository;
 import com.jun.springbootjwt.endpoint.user.dto.LoginDto;
@@ -29,6 +30,7 @@ public class UserService {
                 .name(signUpDto.getName())
                 .email(signUpDto.getEmail())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
+                .role(Role.USER)
                 .build();
 
         return UserDto.of(userRepository.save(user));
