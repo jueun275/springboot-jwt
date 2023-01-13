@@ -6,6 +6,7 @@ spring:
     password: 1234
   jpa:
     open-in-view: false
+    database: mysql
     hibernate:
       ddl-auto: update
     properties:
@@ -13,3 +14,6 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+  redis:
+    host: localhost
+    port: 6379
