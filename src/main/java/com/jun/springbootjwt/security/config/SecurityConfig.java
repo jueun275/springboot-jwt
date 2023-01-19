@@ -1,7 +1,7 @@
 package com.jun.springbootjwt.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jun.springbootjwt.security.factory.JwtUtil;
+import com.jun.springbootjwt.jwt.JwtUtil;
 import com.jun.springbootjwt.security.filter.JwtAuthenticationFilter;
 import com.jun.springbootjwt.security.filter.JwtAuthorizationFilter;
 import com.jun.springbootjwt.security.provider.JwtAuthenticationProvider;
@@ -12,12 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,7 +57,7 @@ public class SecurityConfig  {
                                 .antMatchers("/api/v1/login").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtUtil, mapper))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager, mapper))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager, userDetailsService, jwtUtil));
         return http.build();
     }
