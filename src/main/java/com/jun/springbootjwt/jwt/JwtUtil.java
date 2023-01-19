@@ -1,5 +1,6 @@
 package com.jun.springbootjwt.jwt;
 
+import com.jun.springbootjwt.jwt.refresh.TokenExpiredTime;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static com.jun.springbootjwt.jwt.refresh.TokenExpiredTime.ACCESS_TOKEN_EXPIRATION_TIME;
+import static com.jun.springbootjwt.jwt.refresh.TokenExpiredTime.REFRESH_TOKEN_EXPIRATION_TIME;
+
 @Slf4j
 @Component
 public class JwtUtil {
@@ -23,12 +27,12 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateAccessToken(final String email, final int expiredTime) {
-        return createToken(email, expiredTime);
+    public String generateAccessToken(final String email) {
+        return createToken(email, ACCESS_TOKEN_EXPIRATION_TIME.getValue());
     }
 
-    public String generateRefreshToken(final String email, final int expiredTime) {
-        return createToken(email, expiredTime);
+    public String generateRefreshToken(final String email) {
+        return createToken(email, REFRESH_TOKEN_EXPIRATION_TIME.getValue());
     }
 
     public boolean isValidToken(final String token) {
@@ -59,7 +63,7 @@ public class JwtUtil {
     }
 
     private Date settingsDate(final int plusTime) {
-        return Date.from(LocalDateTime.now().plusMinutes(plusTime)
+        return Date.from(LocalDateTime.now().plusHours(plusTime)
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
         );
