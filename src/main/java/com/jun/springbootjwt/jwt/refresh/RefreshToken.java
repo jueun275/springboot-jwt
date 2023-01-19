@@ -15,9 +15,7 @@ public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String email;
-    private String username;
     private String refreshToken;
 
 
@@ -26,10 +24,9 @@ public class RefreshToken {
     }
 
     @Builder
-    public RefreshToken(Long id, String email, String username, String refreshToken) {
+    public RefreshToken(Long id, String email, String refreshToken) {
         this.id = id;
         this.email = email;
-        this.username = username;
         this.refreshToken = refreshToken;
     }
 }

@@ -14,18 +14,16 @@ public class JwtService {
     private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public void save(UserDto userDto, String refreshToken) {
+    public void save(String email, String refreshToken) {
         RefreshToken token = RefreshToken.builder()
-                .email(userDto.getEmail())
-                .username(userDto.getName())
+                .email(email)
                 .refreshToken(refreshToken)
                 .build();
         refreshTokenRepository.save(token);
     }
 
-    public void updateRefreshToken(String email) {
-        RefreshToken token = refreshTokenRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
-        String updateToken = jwtUtil.generateRefreshToken(email,1);
+    public void updateRefreshToken(String email, String updateToken) {
+        RefreshToken token = refreshTokenRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         token.update(updateToken);
     }
 
