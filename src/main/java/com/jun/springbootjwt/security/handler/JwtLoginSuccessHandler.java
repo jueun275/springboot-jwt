@@ -10,7 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class JwtLoginSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -32,14 +36,14 @@ public class JwtLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         log.info("로그인 성공");
-        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
-        final String email = principal.getEmail();
+        final String email = authentication.getPrincipal().toString();
+        log.info(email);
         String refreshToken = jwtUtil.generateRefreshToken(email);
         String accessToken = jwtUtil.generateAccessToken(email);
 
         // Refresh Token DB에 저장
-        jwtService.save(principal.getEmail(), refreshToken);
+        jwtService.save(email, refreshToken);
         log.info("refresh 토근 발급 및 저장 완료");
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
